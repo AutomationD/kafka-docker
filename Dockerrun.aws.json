@@ -1,0 +1,35 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "kafka-logs",
+      "host": {
+        "sourcePath": "/media/ebs_volume/kafka-logs"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "kafka-docker",
+      "image": "kireevco/kafka-docker",
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 9092,
+          "containerPort": 9092
+        },
+        {
+          "hostPort": 2181,
+          "containerPort": 2181
+        }
+      ],
+
+      "mountPoints": [
+        {
+          "sourceVolume": "kafka-logs",
+          "containerPath": "/mnt/kafka-logs"
+        }
+      ]
+    }
+  ]
+}

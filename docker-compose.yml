@@ -1,0 +1,24 @@
+kafka:
+  build: .
+  container_name: kafka
+  ports:
+    - "2181:2181"
+    - "9092:9092"
+  environment:
+    ADVERTISED_HOST: kafka
+    ADVERTISED_PORT: 9092
+    LOG_RETENTION_HOURS: 336
+  volumes:
+    - ./kafka-logs:/mnt/kafka-logs
+
+kafka-producer:
+  build: .
+  container_name: kafka-producer
+  links:
+    - kafka:kafka
+
+kafka-consumer:
+  build: .
+  container_name: kafka-consumer
+  links:
+    - kafka:kafka
